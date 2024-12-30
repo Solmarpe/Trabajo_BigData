@@ -1,0 +1,309 @@
+---
+title: |
+    <span style="font-size:2.5em;">LOS COCHES ELÉCTRICOS</span>
+  
+
+subtitle: |
+  <span style="font-size:1.5em;">Evolución y comparativa de los coches eléctricos</span>
+description: |
+  Explorando los avances y cambios en el mercado de los coches eléctricos durante los últimos años.
+abstract: La tecnología ha transformado los vehículos, priorizando comodidad sobre impacto ambiental, lo que ha agravado las emisiones de gases de efecto invernadero y la dependencia de combustibles fósiles. Como alternativa, los vehículos eléctricos, aún en desarrollo, ofrecen una solución sostenible al estar impulsados por electricidad. Este informe analiza sus características, ventajas, limitaciones técnicas, y su aceptación en España frente a otros países de la UE.
+
+author: 
+- name: Sol Martín (solmarpe@alumni.uv.es)  
+  affiliation: Universitat de València
+  affiliation-url: https://www.uv.es
+- name: Ainhoa Piles (ainpimon@alumni.uv.es)
+  affiliation: Universitat de València
+  affiliation-url: https://www.uv.es
+
+date: today
+
+format:
+  html:
+    theme: sandstone
+    highlight-style: solarized-light
+    page-layout: full 
+    backgroundcolor: white
+    fontcolor: black
+
+    
+
+  
+categories: [trabajo BigData, coches electricos]  
+        
+title-block-banner: "imagenes/coches_electricos.jpg"
+title-block-banner-height: 6000px
+title-block-style: default
+title-block-banner-color: black
+
+
+---
+
+
+## Introducción
+
+La emisión de gases de efecto invernadero que provienen de motores como los de gasolina o diésel, representa un grave problema en el medio ambiente. Y en respuesta a este desafío, las tecnologías actuales buscan soluciones innovadora,  destacando los vehículos eléctricos como la solución más sostenible.
+
+Algunas de las fuentes utilizadas son:
+
+- ⁠EV Observatory. (n.d.). Recuperado de https://evobservatory.iit.comillas.edu
+- ⁠European Alternative Fuels Observatory. (n.d.). Recuperado de https://alternative-fuels-observatory.ec.europa.eu
+- ⁠Motorpasión. (2020, 15 de diciembre). Europa quiere 30 millones de coches eléctricos circulando en 2030, pero la industria automotriz no lo ve factible. Recuperado de https://www.motorpasion.com/industria/europa-quiere-30-millones-coches-electricos-circulando-2030-industria-automotriz-no-ve-factible
+-⁠ ⁠Agencia Europea de Medio Ambiente. (n.d.). Recuperado de https://www.eea.europa.eu/es
+-⁠ ⁠Agencia Internacional de la Energía. (n.d.). Recuperado de https://www.iea.org
+
+---
+
+## Carga tu coche, descarga el planeta
+
+
+![](./imagenes/coche.png){fig-align="center"}
+
+
+---
+
+## Algunos gráficos
+
+
+Bueno pues vamos a hacer algún gráfico, pero claro antes he de cargar los paquetes
+
+```{r}
+#| eval: true
+library(tidyverse)
+library(gganimate)
+```
+
+
+---
+
+### Primer gráfico
+
+Este análisis explora la evolución del coche eléctrico mediante gráficos que destacan su crecimiento y su impacto en la movilidad sostenible. Procedemos a su ilustración.
+
+```{r}
+
+#- primer gráfico
+Emisiones_CO2 <- structure(list(Motor = c("Gasolina", "Diesel", "Eléctrico"), 
+    Emisiones = c(246.04, 212.96, 51.62)), row.names = c(NA, 
+-3L), class = c("tbl_df", "tbl", "data.frame"))
+
+posiciones1 <- c("Gasolina", "Diesel", "Eléctrico")
+
+ggplot(Emisiones_CO2)+
+  geom_bar(aes(x=Motor, y=Emisiones), stat="identity", fill= "#6B8E23", color="white", width = 0.7) +
+  labs(title = "Gráfico 1: Emisiones de CO2 por Km",
+       x =  "Motor",
+       y = "Emisiones (g)",
+       caption = "Fuente: Elaboración propia / Datos: OVEMS") +
+  scale_x_discrete(limits = posiciones1) +
+  theme_classic() +
+  theme(plot.background = element_rect(fill = "white"),
+        panel.background = element_rect(fill = "white",
+                                        colour = "white"),
+        plot.title = element_text(family = "Times New Roman",
+                                  size=15,
+                                  vjust=2,
+                                  face="bold",
+                                  color= "black",
+                                  lineheight= 1.5,
+                                  hjust=0.5),
+        plot.caption=element_text(color="#87CEFA", hjust=01),
+        axis.line = element_line(colour = "#87CEFA"),
+        axis.text.x = element_text(color="#87CEFA"),
+        axis.text.y = element_text(color="#87CEFA"),
+        axis.ticks = element_line(colour = "#87CEFA"),
+        axis.title = element_text(color="#87CEFA"))
+
+```
+
+Es bien conocido que los motores de combustión interna (MCI), que se encuentran en la mayoría de los vehículos, son responsables de la emisión de una considerable cantidad de gases de efecto invernadero. En la Unión Europea, por ejemplo, los MCI generan el 25% de las emisiones de dióxido de carbono (CO2), lo que contribuye significativamente al cambio climático.
+
+Para evaluar las ventajas del motor eléctrico en términos de emisiones contaminantes, es necesario compararlo con los motores más utilizados en la actualidad. En el proceso de combustión, los motores de gasolina emiten más CO2 que los de diésel, aproximadamente un 14 % frente a un 12 %. Sin embargo, los vehículos eléctricos no emiten gases contaminantes directamente. Es importante tener en cuenta, en este caso, las emisiones derivadas de la generación de electricidad, las cuales varían según la fuente de producción. Algunas fuentes, como las centrales nucleares, son más contaminantes, mientras que las fuentes renovables generan electricidad con emisiones prácticamente nulas.
+
+Por esta razón, en el gráfico 1 se presenta una estimación de las emisiones de CO2 por tipo de motor, expresadas en gramos de CO2 por kilómetro recorrido. Como se observa, los motores de gasolina generan las mayores emisiones, seguidos por los de diésel, con una diferencia notable respecto a los vehículos eléctricos, que no producen emisiones directas.
+
+---
+
+### Segundo gráfico
+
+```{r}
+#- segundo gráfico
+Precio_promedio <- structure(list(Motor = c("Gasolina", "Diesel", "Eléctrico"), 
+    Precio = c(11.8, 8.5, 1.7)), row.names = c(NA, -3L), class = c("tbl_df", 
+"tbl", "data.frame"))
+
+posiciones1 <- c("Gasolina", "Diesel", "Eléctrico")
+
+ggplot(Precio_promedio)+
+  geom_bar(aes(x=Motor, y=Precio), stat="identity", fill= "#6B8E23", color="white", width = 0.7) +
+  labs(title = "Gráfico 2: € por cada 100 km",
+       x =  "Motor",
+       y = '€/100km',
+       caption = "Fuente: Elaboración propia / Datos: OVEMS") +
+  scale_x_discrete(limits = posiciones1) +
+  theme_classic() +
+  theme(plot.background = element_rect(fill = "white"),
+        panel.background = element_rect(fill = "white",
+                                        colour = "white"),
+        plot.title = element_text(family = "Times New Roman",
+                                  size=15,
+                                  vjust=2,
+                                  face="bold",
+                                  color= "#373737",
+                                  lineheight= 1.5,
+                                  hjust=0.5),
+        plot.caption=element_text(color="#87CEFA", hjust=01),
+        axis.line = element_line(colour = "#87CEFA"),
+        axis.text.x = element_text(color="#87CEFA"),
+        axis.text.y = element_text(color="#87CEFA"),
+        axis.ticks = element_line(colour = "#87CEFA"),
+        axis.title = element_text(color="#87CEFA"))
+
+```
+
+Al analizar los datos de manera más detallada, se observa que los vehículos eléctricos emiten un 79% menos CO2 que los de gasolina, y un 75,8% menos que los de diésel. Esta diferencia podría aumentar aún más en el futuro debido al crecimiento de las fuentes de energía renovables y los avances tecnológicos, lo que permitiría que el ciclo de vida de los automóviles llegue a ser completamente "0 emisiones".
+
+Aunque las emisiones son un factor crucial al comparar los diferentes tipos de motores, también existen otras variables significativas que determinan las ventajas del coche eléctrico. Un ejemplo de esto es que, al no haber proceso de combustión, el motor eléctrico no genera vibraciones ni ruidos, incluso cuando se le exige su máxima potencia. En su lugar, solo se percibe un leve silbido, lo que contribuye a una experiencia de conducción mucho más silenciosa.
+
+Uno de los factores que más interesa a los consumidores es, sin duda, el coste estimado para repostar el vehículo. En el Gráfico 2 se muestra la comparación del precio aproximado en euros para recorrer 100 km con cada tipo de motor. Es fácil notar que la distribución de los costos sigue una tendencia similar a la observada en las emisiones. El costo para recorrer 100 km con un coche de gasolina es de aproximadamente 12 €, mientras que con un vehículo eléctrico baja por debajo de los 2 €. El motor diésel se sitúa entre ambos, con un precio estimado de unos 8,5 €, pero aún así, está considerablemente por debajo del coste de los vehículos de gasolina.
+
+---
+
+### El tercer gráfico
+
+```{r}
+#- tercer gráfico
+Matriculaciones2 <- structure(list(Motor = c("Híbrido enchufable", "Eléctrico"), 
+    Total = c(23301, 17925), Porcentaje = c(56.52, 43.48), lab.ypos = c(28.26, 
+    78.26)), row.names = c(NA, -2L), class = c("tbl_df", "tbl", 
+"data.frame"))
+
+Matriculaciones2 <- Matriculaciones2 %>%
+  arrange(desc(Motor)) %>%
+  mutate(lab.ypos = cumsum(Porcentaje) - 0.5*Porcentaje)
+
+
+ggplot(Matriculaciones2, aes(x="", y=Porcentaje, fill=Motor)) +
+  geom_bar(stat="identity", width=1, color="white") +
+  coord_polar("y", start=0) +
+  labs(title = "Gráfico 3: Comparación de híbridos enchufables y eléctricos",
+       caption = "Fuente: Elaboración propia / Datos: EAFO")+
+  geom_text(aes(y = lab.ypos, label = Porcentaje), color = "white", size = 4)+
+  scale_fill_manual(values = c("#6B8E23", "#87CEFA"))+
+  theme_void()+
+  theme(plot.title = element_text(family = "Times New Roman",
+                                   size=15,
+                                   vjust=2,
+                                   face="bold",
+                                   color= "#373737",
+                                   lineheight= 1.5,
+                                   hjust=0.5),
+         plot.caption=element_text(color="#373737", hjust=01))
+ 
+```
+
+Sin duda, comprender la aceptación y demanda de los coches eléctricos en la sociedad es clave para evaluar su evolución. No obstante, también resulta relevante señalar la distinción entre los dos tipos de vehículos. En el Gráfico 4, se aprecia que los consumidores españoles tienden a preferir los híbridos enchufables, que representan el 56.52% de las nuevas matriculaciones en 2020, frente al 43.48% correspondiente a los eléctricos. Aunque la diferencia no es significativa, permite reflejar de manera más precisa la aceptación y presencia de ambos tipos de vehículos en la sociedad española.
+
+### El cuarto gráfico
+
+```{r}
+#- cuarto gráfico
+Matriculaciones_Europa <- structure(list(País = c("Alemania", "Francia", "Reino Unido", 
+"Noruega", "Suecia", "Países Bajos", "Italia", "Bélgica", "España", 
+"Suiza", "Alemania", "Francia", "Reino Unido", "Noruega", "Suecia", 
+"Países Bajos", "Italia", "Bélgica", "España", "Suiza"), Tipo = c("Eléctricos", 
+"Eléctricos", "Eléctricos", "Eléctricos", "Eléctricos", "Eléctricos", 
+"Eléctricos", "Eléctricos", "Eléctricos", "Eléctricos", "Híbridos enchufables", 
+"Híbridos enchufables", "Híbridos enchufables", "Híbridos enchufables", 
+"Híbridos enchufables", "Híbridos enchufables", "Híbridos enchufables", 
+"Híbridos enchufables", "Híbridos enchufables", "Híbridos enchufables"
+), Total = c(194474, 111127, 108205, 76804, 27968, 73204, 32487, 
+14994, 17927, 19546, 200469, 74592, 66877, 28905, 66109, 15925, 
+27407, 31343, 23306, 14429)), row.names = c(NA, -20L), class = c("tbl_df", 
+"tbl", "data.frame"))
+
+posiciones4 <- c("Suiza", "España", "Bélgica", "Italia", "Países Bajos", "Suecia", "Noruega", 
+                "Reino Unido", "Francia","Alemania")
+
+
+ggplot(Matriculaciones_Europa, aes(fill = Tipo, y = Total, x = País)) + 
+  geom_bar(position = "stack", stat = "identity") +
+  labs(
+    title = "Gráfico 4: Top 10 países de la UE",
+    x = "País",
+    y = "Total",
+    caption = "Fuente: Elaboración propia / Datos: EEA"
+  ) +
+  scale_y_continuous(
+    limits = c(0, 400000),
+    breaks = seq(0, 400000, by = 100000), 
+    labels = scales::comma
+  ) +
+  scale_fill_manual(values = c("#6B8E23", "#87CEFA")) +
+  coord_flip() +
+  theme_classic() +
+  theme(
+    plot.title = element_text(
+      family = "Times New Roman", size = 15, vjust = 2, 
+      face = "bold", color = "#373737", lineheight = 1.5, hjust = 0.5
+    ),
+    plot.caption = element_text(color = "#373737", hjust = 0.1)
+  )
+
+```
+
+En España, parece que la aceptación de los coches eléctricos por parte de los consumidores está en aumento, lo cual queda reflejado en los gráficos presentados previamente. Sin embargo, para entender la verdadera magnitud de estos datos, es necesario expandir la comparación a otros países.
+
+En este sentido, en el gráfico 6 se observa una comparación entre los 10 países de la Unión Europea con mayor número de vehículos eléctricos matriculados en 2020. Se hace una distinción entre los vehículos completamente eléctricos e híbridos enchufables. Uno de los aspectos más destacados es la gran diferencia entre Alemania y el resto de los países, liderando el ranking con más del doble de matriculaciones que Francia, que ocupa el segundo lugar.
+
+Para analizar la situación de los demás países, se pueden identificar tres zonas de estudio. La primera estaría compuesta por Francia y Reino Unido, donde la presencia de vehículos eléctricos e híbridos es especialmente alta, con ambos países acercándose a los 200.000 vehículos. En una segunda zona, se encuentran tres países con cifras similares, rondando los 100.000 vehículos eléctricos e híbridos. Por último, la tercera zona incluye a España, junto con los otros cuatro países que cierran la lista, con una media aproximada de 50.000 vehículos por país.
+
+De este modo, se puede observar que la diferencia en la media de vehículos eléctricos entre las distintas zonas se reduce aproximadamente a la mitad. Esto confirma que existen disparidades significativas entre los países de la Unión Europea en cuanto a la presencia de estos vehículos.
+
+
+### Conclusión
+
+
+Tras analizar diversos factores y variables relacionadas con la evolución del coche eléctrico, así como los acontecimientos clave que han impulsado su creciente presencia en la sociedad, se pueden extraer varias conclusiones.
+
+En primer lugar, ha quedado claro que los coches eléctricos han vuelto a ser una realidad, algo que comenzó a gestarse en la mente de los inventores del siglo XIX. Esta vez, han llegado para quedarse. La principal diferencia que ha hecho posible este avance es el desarrollo tecnológico extraordinario que ha caracterizado las últimas décadas.
+
+Este fenómeno probablemente no se habría materializado, o al menos no con la misma magnitud, sin la creciente concienciación de la sociedad sobre el medio ambiente. Los coches eléctricos son los principales protagonistas en el desafío global de reducir las emisiones contaminantes y frenar el cambio climático. Con los vehículos de combustión interna, el motor eléctrico ha pasado de ser un deseo a convertirse en una necesidad.
+
+En este contexto, muchos países han comenzado a adoptar esta transformación hacia el futuro, como es el caso de España. En los últimos años, se ha observado una tendencia al alza en la compra de vehículos eléctricos. Como resultado, en 2020 se ha registrado una reducción significativa en las nuevas matriculaciones de coches de gasolina y diésel, mientras que los vehículos eléctricos e híbridos enchufables han experimentado un gran aumento hasta fecha actual (2024).
+
+Sin embargo, España no es el único país que está participando en esta transformación. Numerosos países alrededor del mundo han abrazado la causa. En particular, muchos países de la Unión Europea ya cuentan con una flota considerable de vehículos eléctricos, la cual continúa creciendo a un ritmo acelerado. Lo más sorprendente es la gran disparidad entre países, tanto en términos de la cantidad de vehículos como en el tipo de coche eléctrico preferido. China, como gran potencia, también juega un papel fundamental, liderando el mercado mundial en ventas de coches eléctricos, aunque la brecha con Europa se está reduciendo rápidamente.
+
+Finalmente, ha quedado demostrado que el futuro de los coches eléctricos está cada vez más cerca, y se espera que, en un plazo de pocos años, estos vehículos sustituyan por completo a los de combustión interna.
+
+```{r}
+
+mensaje <- "MUCHAS GRACIAS POR SU ATENCIÓN!!"
+mensaje_data <- data.frame(
+  Letra = strsplit(mensaje, "")[[1]],
+  Posicion = seq_len(nchar(mensaje))
+)
+
+p <- ggplot(mensaje_data, aes(x = Posicion, y = 0, label = Letra)) +
+  geom_text(size = 10, color = "#6B8E23") + 
+  xlim(0, nchar(mensaje) + 1) +
+  coord_fixed(ratio = 20) +
+  theme_void()
+
+animacion <- p +
+  transition_states(Posicion, transition_length = 0.5, state_length = 0.5) +
+  enter_fade() +
+  exit_fade() +
+  shadow_mark() 
+
+animate(animacion, fps = 20)
+```
+
+<br>
+
+
+
+
+
+
